@@ -5,11 +5,9 @@ import allureTest.pages.MainPage;
 import allureTest.pages.SearchPage;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +39,6 @@ public class AllureTesting extends BaseTest {
         IssuePage
                 .getExpectedElementInsideIssue()
                 .shouldBe(Condition.visible);
-
     }
 
     @Test
@@ -59,32 +56,32 @@ public class AllureTesting extends BaseTest {
                     .setValue(TestData.getTextToSearch())
                     .pressEnter();
         });
-        step("Клик по найденному репозиторию", ()->{
+        step("Клик по найденному репозиторию", () -> {
             SearchPage
                     .getSearchedElement()
                     .shouldHave(Condition
                             .text(TestData.getExpectedTextInSearchPage()))
                     .click();
         });
-        step("Клик по кнопке Issue", ()->{
+        step("Клик по кнопке Issue", () -> {
             SearchPage
                     .getIssueLink()
                     .shouldBe(Condition.exist)
                     .click();
         });
-        step("Проверка, что в Issue отображается нужный элемент", () ->{
+        step("Проверка, что в Issue отображается нужный элемент", () -> {
             IssuePage
                     .getExpectedElementInsideIssue()
                     .shouldBe(Condition.visible);
         });
     }
+
     @Test
     @DisplayName("Тест нахождения элемента в issue со степами-аннотациями")
     @Owner("TimBart")
     @Severity(SeverityLevel.CRITICAL)
     void testWithAnnotationSteps() {
-         Steps steps = new Steps();
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        Steps steps = new Steps();
         steps.openMainPage(TestData.getURL());
         steps.repositorySearch(TestData.getTextToSearch());
         steps.clickOnSearchElement(TestData.getExpectedTextInSearchPage());
